@@ -1,8 +1,28 @@
 # Libraries
 import yfinance as yf
 import pyodbc as db
+import matplotlib.pyplot as plt
 
-# Check For drivers
+# Future Idea
+# def pull_data(field, arr):
+#     data = cursor.execute("select ${field} from Table1").fetchall()
+#     # List to store stock tickers
+#     vals = []
+#     # Iterated Value in While Loop
+#     x = 0
+#     # Adds every value in the database to tickers list
+#     while True:
+#         try:
+#             stocks.append(rows[x][0])
+#             x += 1
+#         except IndexError:
+#             break
+
+# # Check For drivers
+# datax = yf.download('AAPL', '2016-01-01', '2019-08-01')
+# # Plot the close price of the AAPL
+# datax['Adj Close'].plot()
+# plt.savefig("stock_performance.png")
 required_drivers = [x for x in db.drivers() if 'ACCESS' in x.upper()]
 print(f'MS-Access Drivers : {required_drivers}')
 # Get Stock Tickers
@@ -15,9 +35,10 @@ try:
     cursor = connection.cursor()
 
     # Get Ticker Symbols from SQL database
-    rows = cursor.execute("select Field1 from Table1").fetchall()
+    rows = cursor.execute("select Ticker from Table1").fetchall()
     # List to store stock tickers
     stocks = []
+    stock_vals = []
     # Iterated Value in While Loop
     x = 0
     # Adds every value in the database to tickers list
@@ -34,8 +55,33 @@ try:
         ticker_yahoo = yf.Ticker(stock)
         data = ticker_yahoo.history()
         last_quote = data['Close'].iloc[-1]
-        cursor.execute("UPDATE Table1 SET Field2=? WHERE ID=? ", (last_quote, str(y)))
+        stock_vals.append(last_quote)
+        cursor.execute("UPDATE Table1 SET currentPrice=? WHERE ID=? ", (round(last_quote, 2), str(y)))
         connection.commit()
+    date = cursor.execute("select whenBought from Table1").fetchall()
+    # List to store stock tickers
+    dates = []
+    # Iterated Value in While Loop
+    x = 0
+    # Adds every value in the database to tickers list
+    while True:
+        try:
+            dates.append(date[x][0])
+            x += 1
+        except IndexError:
+            break
+    y = 0
+    for date in dates:
+        try:
+            name = stocks[y]
+            stonk = yf.download(name, date)
+            stonk = float(stonk["Close"][0])
+            change = ((float(stock_vals[y]) - stonk)/(abs(stonk)))*100
+            y += 1
+            cursor.execute("UPDATE Table1 SET percentChange=? WHERE ID=? ", (round(change, 2), str(y)))
+            connection.commit()
+        except TypeError:
+            break
     print('Data Inserted')
 except db.Error as error:
     print("Error in Connection", error)
