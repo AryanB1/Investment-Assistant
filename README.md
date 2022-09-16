@@ -8,5 +8,5 @@ connection_msg = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\User
 - Furthermore, the fields and tables must be edited to match the name of your fields and tables. For simplicity, I left the initial values of these fields as the default values assigned by Microsoft
 - Finally, the Code on line 26 is preset to return the latest price of the stock, visit the yfinance documentation linked below to change this 
 ## Requirements
-- yfinance library in python docs
-- 
+- yfinance library in python [docs](https://pypi.org/project/yfinance/)
+- pyodbc [docs](https://pypi.org/project/pyodbc/)
