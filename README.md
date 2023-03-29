@@ -10,3 +10,7 @@ connection_msg = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\User
 ## Requirements
 - yfinance library in python [docs](https://pypi.org/project/yfinance/)
 - pyodbc [docs](https://pypi.org/project/pyodbc/)
+## Disclaimer
+This code is not professional advice, and I am not a professional in the field of finance. Please consult with a financial advisor before making any decisions. This software provides no warranty to the user. By using this software you are entirely liable for any damages that it causes. 
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
